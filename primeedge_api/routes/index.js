@@ -17,7 +17,7 @@ routes.get("/", (req, res) => {
 // ****************************************************************************
 //  check for duplicate entry on registration
 // ****************************************************************************
-routes.get("/checkDupes", (req, res) => {
+routes.post("/checkDupes", (req, res) => {
   let username = req.body.username;
   let email = req.body.email;
 
@@ -31,7 +31,6 @@ routes.get("/checkDupes", (req, res) => {
       ];
     })
     .then(userList => {
-      console.log(userList);
       if (userList[0] != null) {
         res.json({ success: false, message: "Username already exists." });
       } else if (userList[1] != null) {
@@ -40,7 +39,10 @@ routes.get("/checkDupes", (req, res) => {
           message: "Email address already in use."
         });
       } else {
-        return true;
+        res.json({
+          success: true,
+          message: "Username and email are available."
+        });
       }
     });
 });
@@ -69,12 +71,7 @@ routes.post("/saveUser", (req, res) => {
         });
       })
       .catch(error => {
-        console.log("failed, error: " + error);
         res.json({ success: false, err: error });
-      })
-      .catch(err => {
-        console.log(err);
-        res.json({ success: false, message: "Server 500 error" });
       });
   });
 });
@@ -117,7 +114,6 @@ routes.post("/submitLogin", (req, res) => {
       }
     })
     .catch(error => {
-      console.log("CATCH ERROR: " + error);
       res.json({ success: false, err: error });
     });
 });
