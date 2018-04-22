@@ -16,7 +16,7 @@ describe("/submitLogin api route", function() {
   it("returns true if correct user/pw combo given", function testSubmitLogin(done) {
     request(server)
       .post("/submitLogin")
-      .send({ username: "corey1", password: "password" })
+      .send({ username: "test1", password: "password" })
       .end(function(err, res) {
         expect(res.body.success).to.be.equal(true);
         done();
@@ -26,7 +26,7 @@ describe("/submitLogin api route", function() {
   it("returns JWT when correct user/pw given", function testSubmitLogin(done) {
     request(server)
       .post("/submitLogin")
-      .send({ username: "corey1", password: "password" })
+      .send({ username: "test1", password: "password" })
       .end(function(err, res) {
         let token = res.body.token;
         let result;
@@ -56,7 +56,7 @@ describe("/submitLogin api route", function() {
   it("returns false with message if password incorrect", function testSubmitLogin(done) {
     request(server)
       .post("/submitLogin")
-      .send({ username: "corey1", password: "badpass" })
+      .send({ username: "test1", password: "badpass" })
       .end(function(err, res) {
         expect(res.body.success).to.be.equal(false);
         expect(res.body.message).to.be.equal("Username or password incorrect.");

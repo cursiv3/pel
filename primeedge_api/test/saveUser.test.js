@@ -1,6 +1,6 @@
-var request = require("supertest");
-var expect = require("chai").expect;
-var bcrypt = require("bcryptjs");
+const request = require("supertest");
+const expect = require("chai").expect;
+const config = require("../config");
 
 describe("/saveUser api route", function() {
   var server;
@@ -12,7 +12,7 @@ describe("/saveUser api route", function() {
     server.close(done);
   });
 
-  it("hashes password sent to route", function testSaveUser(done) {
+  it("denies access with 403 without access code", function testSaveUserDeny(done) {
     request(server)
       .post("/saveUser")
       .send({
@@ -21,7 +21,8 @@ describe("/saveUser api route", function() {
         email: "newguy@email.com"
       })
       .end(function(err, res) {
-        expect(res.body.success).to.be.equal(true);
+        expect(res.status).to.be.equal(403);
+        expect(res.body.message).to.be.equal("Access denied.");
         done();
       });
   });
