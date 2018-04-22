@@ -48,35 +48,6 @@ routes.post("/checkDupes", (req, res) => {
 });
 
 // ****************************************************************************
-//  save user to database
-// ****************************************************************************
-
-routes.post("/saveUser", (req, res) => {
-  let username = req.body.username;
-  let email = req.body.email;
-  let saltRounds = 10;
-
-  bcrypt.hash(req.body.password, saltRounds, (err, hashPass) => {
-    db
-      .none("INSERT INTO users(username, pword, email) VALUES($1, $2, $3)", [
-        username,
-        hashPass,
-        email
-      ])
-      .then(data => {
-        console.log("User saved successfully!");
-        res.json({
-          success: true,
-          message: "user submitted"
-        });
-      })
-      .catch(error => {
-        res.json({ success: false, err: error });
-      });
-  });
-});
-
-// ****************************************************************************
 // login submit
 // ****************************************************************************
 routes.post("/submitLogin", (req, res) => {
@@ -90,11 +61,11 @@ routes.post("/submitLogin", (req, res) => {
       if (user.length < 1) {
         res.json({
           success: false,
-          message: "User does not exist."
+          message: "Username or password incorrect."
         });
       } else {
         var usr = user[0].username;
-        var hashPass = user[0].pword;
+        var hashPass = user[0].passwd;
 
         bcrypt.compare(password, hashPass, (err, doesPwMatch) => {
           if (doesPwMatch != true || usr != username) {
@@ -107,7 +78,6 @@ routes.post("/submitLogin", (req, res) => {
             var token = jwt.sign(payload, config.secret, {
               expiresIn: 60 * 60 * 24
             });
-            console.log("Successfully created token!");
             res.json({ success: true, message: "Token created", token: token });
           }
         });
@@ -116,6 +86,58 @@ routes.post("/submitLogin", (req, res) => {
     .catch(error => {
       res.json({ success: false, err: error });
     });
+});
+
+// ********************************************************************
+//                      END UNPROTECTED ROUTES
+// ********************************************************************
+
+// ================== MIDDLEWARE verify token =========================
+
+app.use((req, res, next) => {
+  const token =
+    req.body.token || req.query.token || req.headers["authorization"];
+
+  if (token) {
+    jwt.verify(token, app.get("superSecret"), (err, decoded) => {
+      if (err) {
+        return res.json({ success: false, message: "Authentication failed." });
+      } else {
+        req.decoded = decoded;
+        res.json({ success: true });
+      }
+    });
+  } else {
+    return res.json({ success: false, message: "No authentication provided." });
+  }
+});
+
+// ****************************************************************************
+//  save user to database
+// ****************************************************************************
+
+routes.post("/saveUser", (req, res) => {
+  let username = req.body.username;
+  let email = req.body.email;
+  let saltRounds = 10;
+
+  bcrypt.hash(req.body.password, saltRounds, (err, hashPass) => {
+    db
+      .none("INSERT INTO users(username, passwd, email) VALUES($1, $2, $3)", [
+        username,
+        hashPass,
+        email
+      ])
+      .then(data => {
+        res.json({
+          success: true,
+          message: "user submitted"
+        });
+      })
+      .catch(error => {
+        res.json({ success: false, err: error.message });
+      });
+  });
 });
 
 module.exports = routes;

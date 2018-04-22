@@ -1,7 +1,7 @@
 var request = require("supertest");
 var expect = require("chai").expect;
 
-describe("api routes", function() {
+describe("/checkDupes api route", function() {
   var server;
   beforeEach(function() {
     delete require.cache[require.resolve("../bin/www")];
@@ -16,7 +16,7 @@ describe("api routes", function() {
       .post("/checkDupes")
       .send({ username: "test", email: "test@email.com" })
       .end(function(err, res) {
-        expect(res, true);
+        expect(res.body.success).to.be.equal(true);
         expect(res.statusCode).to.be.equal(200);
         done();
       });
@@ -27,8 +27,8 @@ describe("api routes", function() {
       .post("/checkDupes")
       .send({ username: "test1" })
       .end(function(err, res) {
-        expect(res.message, "Username already exists.");
-        expect(res.success, false);
+        expect(res.body.message).to.be.equal("Username already exists.");
+        expect(res.body.success).to.be.equal(false);
         done();
       });
   });
@@ -38,8 +38,8 @@ describe("api routes", function() {
       .post("/checkDupes")
       .send({ email: "test1@email.com" })
       .end(function(err, res) {
-        expect(res.message, "Email address already in use.");
-        expect(res.success, false);
+        expect(res.body.message).to.be.equal("Email address already in use.");
+        expect(res.body.success).to.be.equal(false);
         done();
       });
   });
