@@ -2,7 +2,7 @@ const request = require("supertest");
 const expect = require("chai").expect;
 const config = require("../config");
 
-describe("/saveUser api route", function() {
+describe("/submitRegistration api route", function() {
   var server;
   beforeEach(function() {
     delete require.cache[require.resolve("../bin/www")];
@@ -14,7 +14,7 @@ describe("/saveUser api route", function() {
 
   it("denies access with 403 without access code", function testSaveUserDeny(done) {
     request(server)
-      .post("/saveUser")
+      .post("/submitRegistration")
       .send({
         username: "newuser",
         password: "password",

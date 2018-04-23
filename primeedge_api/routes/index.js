@@ -2,7 +2,9 @@ const routes = require("express").Router();
 const promise = require("bluebird");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 const config = require("../config");
+const mailerOptionsSetup = require("../mailerOptionsSetup");
 
 const options = {
   promiseLib: promise
@@ -15,12 +17,18 @@ routes.get("/", (req, res) => {
 });
 
 // ****************************************************************************
+//  submit registration
+// ****************************************************************************
+
+// ****************************************************************************
 //  check for duplicate entry on registration
 // ****************************************************************************
-routes.post("/checkDupes", (req, res) => {
+routes.post("/submitRegistration", (req, res) => {
   let username = req.body.username;
+  let password = req.body.password;
   let email = req.body.email;
 
+  // check for duplicate data
   db
     .task("check-dupes", async DB => {
       return [
@@ -35,13 +43,54 @@ routes.post("/checkDupes", (req, res) => {
         res.json({ success: false, message: "Username already exists." });
       } else if (userList[1] != null) {
         res.json({
+          status: 400,
           success: false,
           message: "Email address already in use."
         });
       } else {
-        res.json({
-          success: true,
-          message: "Username and email are available."
+        let saltRounds = 10;
+
+        bcrypt.hash(req.body.password, saltRounds, (err, hashPass) => {
+          db
+            .none(
+              "INSERT INTO users(username, passwd, email, verified) VALUES($1, $2, $3, $4)",
+              [username, hashPass, email, false]
+            )
+            .then(data => {
+              res.json({
+                status: 200,
+                success: true,
+                message: "user submitted"
+              });
+            })
+            .catch(error => {
+              res.json({ status: 500, success: false, err: error.message });
+            });
+
+          // send verification email with JWT
+          const payload = { user: username };
+          var token = jwt.sign(payload, config.secret, {
+            expiresIn: 86400
+          });
+
+          let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: config.mailerEmail,
+              pass: config.mailerPW
+            }
+          });
+
+          let mailOptions = mailerOptionsSetup(token, email);
+
+          transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              res.status(500);
+              res.send(err);
+            } else {
+              res.json({ status: 200, message: "Verification email sent." });
+            }
+          });
         });
       }
     });
@@ -89,36 +138,32 @@ routes.post("/submitLogin", (req, res) => {
 });
 
 // ****************************************************************************
-//  save user to database
+//  verify user email account
 // ****************************************************************************
 
-routes.post("/saveUser", (req, res) => {
-  if (req.body.saveUserCode === config.saveUserCode) {
-    let username = req.body.username;
-    let email = req.body.email;
-    let saltRounds = 10;
+routes.get("/verifyEmail", (req, res) => {
+  const allParams = req.query.token;
+  const token = `${allParams.match(/.+?(?=\?)/)}`;
+  const userEmail = `${allParams.match(/[^=]+$/)}`;
 
-    bcrypt.hash(req.body.password, saltRounds, (err, hashPass) => {
-      db
-        .none("INSERT INTO users(username, passwd, email) VALUES($1, $2, $3)", [
-          username,
-          hashPass,
-          email
-        ])
-        .then(data => {
-          res.status(200);
-          res.json({
-            success: true,
-            message: "user submitted"
-          });
-        })
-        .catch(error => {
-          res.json({ success: false, err: error.message });
+  if (token) {
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) {
+        return res.json({
+          status: 401,
+          success: false,
+          message: "Authentication failed.",
+          error: err
         });
+      } else {
+        db.none(
+          `UPDATE users SET verified = true WHERE email = '${userEmail}'`
+        );
+        res.json({ status: 200, success: true, message: "Email verified." });
+      }
     });
   } else {
-    res.status(403);
-    res.json({ success: false, message: "Access denied." });
+    res.json({ success: false, message: "No authentication provided." });
   }
 });
 
