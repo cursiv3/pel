@@ -3,30 +3,51 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
+  Bar,
+  BarChart,
   Legend,
   Tooltip,
   Cell,
-  Label
+  Label,
+  XAxis,
+  YAxis
 } from "recharts";
+import "./style.css";
 
 const Sex = props => {
   return (
     <div style={{ width: "100%" }}>
       {props.data.map(val => (
-        <div
-          style={{
-            display: "inline-table",
-            width: "16%",
-            fontSize: "initial",
-            borderRadius: "5px",
-            textAlign: "center"
-          }}
-        >
+        <div class="sex-quarter-panel-div">
           <h3>{val.quarter}</h3>
-          <PieChart width={300} height={140}>
+          <BarChart
+            width={200}
+            height={140}
+            data={val.sex}
+            style={{ display: "inline-table" }}
+            label={{ fill: "black" }}
+          >
+            <Bar
+              dataKey="value"
+              cx={0}
+              cy={110}
+              fill="pink"
+              label={{ fill: "black" }}
+            >
+              <Cell fill={"skyblue"} />
+              <Cell fill={"pink"} />
+            </Bar>
+            <XAxis dataKey={"name"} />
+            <YAxis dataKey={"value"} />
+          </BarChart>
+          <PieChart
+            width={200}
+            height={150}
+            style={{ display: "inline-table" }}
+          >
             <Pie
               data={val.sex}
-              cx={150}
+              cx={100}
               cy={70}
               outerRadius={40}
               fill="#8884d8"
@@ -35,7 +56,7 @@ const Sex = props => {
               <Cell fill={"skyblue"} />
               <Cell fill={"pink"} />
             </Pie>
-            <Tooltip />
+            <Tooltip itemStyle={{ color: "navy" }} />
           </PieChart>
         </div>
       ))}
