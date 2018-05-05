@@ -70,7 +70,7 @@ routes.post("/submitRegistration", (req, res) => {
           // send verification email with JWT
           const payload = { user: username };
           var token = jwt.sign(payload, config.secret, {
-            expiresIn: 86400
+            expiresIn: 60 * 60 * 24
           });
 
           let transporter = nodemailer.createTransport({

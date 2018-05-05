@@ -4,7 +4,8 @@
   "description": "PEL front end server",
   "main": "bin/www",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon bin/www"
   },
   "author": "Corey Lewis",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "express": "^4.16.3",
     "http-errors": "^1.6.3",
     "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }
