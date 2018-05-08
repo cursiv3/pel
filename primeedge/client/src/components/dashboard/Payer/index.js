@@ -42,8 +42,6 @@ const Payer = props => {
     avgData.push({ name: key, value: averages[key] });
   }
 
-  console.log("********", avgData);
-
   return (
     <div className="dash-section-wrap-div">
       <div className="payer-quarter-panel-div">

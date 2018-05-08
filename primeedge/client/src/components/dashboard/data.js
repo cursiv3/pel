@@ -1,52 +1,76 @@
 module.exports = {
   sex: [
     {
-      quarter: "Q1 '15",
-      sex: [{ name: "male", value: 1844 }, { name: "female", value: 2576 }]
+      quarter: "Q115",
+      male: 1844,
+      female: 2576,
+      total: 4420
     },
     {
-      quarter: "Q2 '15",
-      sex: [{ name: "male", value: 1914 }, { name: "female", value: 2633 }]
+      quarter: "Q215",
+      male: 1914,
+      female: 2633,
+      total: 4547
     },
     {
-      quarter: "Q3 '15",
-      sex: [{ name: "male", value: 1908 }, { name: "female", value: 2557 }]
+      quarter: "Q315",
+      male: 1908,
+      female: 2557,
+      total: 4465
     },
     {
-      quarter: "Q4 '15",
-      sex: [{ name: "male", value: 1990 }, { name: "female", value: 2717 }]
+      quarter: "Q415",
+      male: 1990,
+      female: 2717,
+      total: 4707
     },
     {
-      quarter: "Q1 '16",
-      sex: [{ name: "male", value: 1973 }, { name: "female", value: 2616 }]
+      quarter: "Q116",
+      male: 1973,
+      female: 2616,
+      total: 4589
     },
     {
-      quarter: "Q2 '16",
-      sex: [{ name: "male", value: 1956 }, { name: "female", value: 2734 }]
+      quarter: "Q216",
+      male: 1956,
+      female: 2734,
+      total: 4690
     },
     {
-      quarter: "Q3 '16",
-      sex: [{ name: "male", value: 1892 }, { name: "female", value: 2720 }]
+      quarter: "Q316",
+      male: 1892,
+      female: 2720,
+      total: 4612
     },
     {
-      quarter: "Q4 '16",
-      sex: [{ name: "male", value: 1955 }, { name: "female", value: 2669 }]
+      quarter: "Q416",
+      male: 1955,
+      female: 2669,
+      total: 4624
     },
     {
-      quarter: "Q1 '17",
-      sex: [{ name: "male", value: 2029 }, { name: "female", value: 2853 }]
+      quarter: "Q117",
+      male: 2029,
+      female: 2853,
+      total: 4882
     },
     {
-      quarter: "Q2 '17",
-      sex: [{ name: "male", value: 2068 }, { name: "female", value: 2833 }]
+      quarter: "Q217",
+      male: 2068,
+      female: 2833,
+      total: 4901
     },
     {
-      quarter: "Q3 '17",
-      sex: [{ name: "male", value: 2081 }, { name: "female", value: 2847 }]
+      quarter: "Q317",
+      male: 2081,
+      female: 2847,
+      total: 4928
     },
     {
-      quarter: "Q4 '17",
-      sex: [{ name: "male", value: 2085 }, { name: "female", value: 2830 }]
+      quarter: "Q417",
+      male: 2085,
+      female: 2830,
+      total: 4915
     }
   ],
   payer: [

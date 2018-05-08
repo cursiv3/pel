@@ -10,56 +10,58 @@ import {
   Cell,
   Label,
   XAxis,
-  YAxis
+  YAxis,
+  LabelList
 } from "recharts";
 import "./style.css";
+
+const PieTooltip = props => {
+  if (props.active) {
+    var data = props.payload[0].payload;
+    var pie = [
+      { name: "male", value: props.payload[0].payload.male },
+      { name: "female", value: props.payload[0].payload.female }
+    ];
+
+    return (
+      <div className="custom-tooltip-wrapper">
+        <p>Male - {data.male}</p>
+        <p>Female - {data.female}</p>
+        <PieChart width={400} height={300} style={{ display: "inline-table" }}>
+          <Pie
+            data={pie}
+            cx={200}
+            cy={150}
+            outerRadius={120}
+            fill="#8884d8"
+            label={{ fill: "black" }}
+          />
+        </PieChart>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 const Sex = props => {
   return (
     <div style={{ width: "100%" }}>
-      {props.data.map(val => (
-        <div class="sex-quarter-panel-div">
-          <h3>{val.quarter}</h3>
-          <BarChart
-            width={200}
-            height={140}
-            data={val.sex}
-            style={{ display: "inline-table" }}
-            label={{ fill: "black" }}
-          >
-            <Bar
-              dataKey="value"
-              cx={0}
-              cy={110}
-              fill="pink"
-              label={{ fill: "black" }}
-            >
-              <Cell fill={"skyblue"} />
-              <Cell fill={"pink"} />
-            </Bar>
-            <XAxis dataKey={"name"} />
-            <YAxis dataKey={"value"} />
-          </BarChart>
-          <PieChart
-            width={200}
-            height={150}
-            style={{ display: "inline-table" }}
-          >
-            <Pie
-              data={val.sex}
-              cx={100}
-              cy={70}
-              outerRadius={40}
-              fill="#8884d8"
-              label={{ fill: "black" }}
-            >
-              <Cell fill={"skyblue"} />
-              <Cell fill={"pink"} />
-            </Pie>
-            <Tooltip itemStyle={{ color: "navy" }} />
-          </PieChart>
-        </div>
-      ))}
+      <div className="sex-quarter-panel-div">
+        <BarChart
+          width={700}
+          height={275}
+          data={props.data}
+          style={{ display: "inline-table" }}
+          label={{ fill: "black" }}
+          barSize={100}
+        >
+          <Bar dataKey="total" cx={0} cy={110} fill="skyblue" barSize={40} />
+          <XAxis dataKey="quarter" />
+          <YAxis />
+          <Tooltip content={<PieTooltip />} />
+        </BarChart>
+      </div>
     </div>
   );
 };
