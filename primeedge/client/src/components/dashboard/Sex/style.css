@@ -1,4 +1,4 @@
-.sex-quarter-panel-div {
+.sex-panel-div {
   display: inline-table;
   width: 100%;
   margin: 0.15%;
@@ -12,5 +12,60 @@
   background-color: white;
   padding: 5px 10px 5px 10px;
   border-radius: 5px;
-  box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.6);
+}
+
+.sex-legend-male-color {
+  display: inline-table;
+  width: 35px;
+  height: 25px;
+  background-color: skyblue;
+  vertical-align: middle;
+  float: left;
+}
+
+.sex-legend-female-color {
+  display: inline-table;
+  width: 35px;
+  height: 25px;
+  background-color: pink;
+  vertical-align: middle;
+  float: left;
+}
+
+.sex-legend-male-label {
+  display: inline-table;
+  vertical-align: middle;
+  float: left;
+  margin: 0 0 0 5px;
+}
+
+.sex-legend-female-label {
+  display: inline-table;
+  vertical-align: middle;
+  float: left;
+  margin: 0 0 0 5px;
+}
+
+.sex-legend-male-val {
+  clear: left;
+  position: relative;
+  top: 20px;
+}
+
+.sex-legend-female-val {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  top: -10px;
+}
+
+.sex-pie-lmh-wrapper {
+  width: 25%;
+  display: inline-table;
+}
+
+.sex-barchart-wrapper {
+  width: 25%;
+  display: inline-table;
 }

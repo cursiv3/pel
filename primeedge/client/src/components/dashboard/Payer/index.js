@@ -68,6 +68,7 @@ const Payer = props => {
         <PieChart width={400} height={300} style={{ display: "inline-table" }}>
           <Pie
             data={avgData}
+            dataKey="value"
             cx={200}
             cy={150}
             outerRadius={120}
