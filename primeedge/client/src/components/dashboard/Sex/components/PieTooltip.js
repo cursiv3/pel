@@ -14,58 +14,25 @@ import {
   LabelList
 } from "recharts";
 
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  index
-}) => {
-  const RADIAN = Math.PI / 180;
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="black"
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
 
 const PieTooltip = props => {
-  if (props.active) {
-    var data = props.payload[0].payload;
-    var pie = [
-      { name: "male", value: data.male },
-      { name: "female", value: data.female }
-    ];
+  if (props.state.isActive) {
 
     return (
       <div className="custom-tooltip-wrapper">
-        <h3>{data.quarter}</h3>
+        <h3>{props.state.data.quarter}</h3>
         <div className="sex-legend-male-val">
           <div className="sex-legend-male-color" />
           <div className="sex-legend-male-label">Male</div>
-          {data.male}
+          {props.state.data.male}
         </div>
         <PieChart width={200} height={200}>
           <Pie
-            data={pie}
+            data={props.state.data}
             dataKey="value"
             cx={100}
             cy={100}
             outerRadius={80}
-            labelLine={false}
-            label={renderCustomizedLabel}
           >
             <Cell fill="skyblue" />
             <Cell fill="pink" />
@@ -74,7 +41,7 @@ const PieTooltip = props => {
         <div className="sex-legend-female-val">
           <div className="sex-legend-female-color" />
           <div className="sex-legend-female-label">Female</div>
-          {data.female}
+          {props.state.data.female}
         </div>
       </div>
     );
