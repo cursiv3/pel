@@ -1,7 +1,6 @@
 import React from "react";
 import "./style.css";
 import TotalsBarchart from "./components/TotalsBarchart";
-import LowMidHighPiechart from "./components/LowMidHighPiechart";
 
 const Sex = props => {
   return (

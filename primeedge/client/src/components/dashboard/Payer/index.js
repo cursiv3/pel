@@ -12,76 +12,75 @@ import {
   XAxis,
   YAxis
 } from "recharts";
+import PieTooltip from "./PieTooltip";
 import "./style.css";
 
-const Payer = props => {
-  var barColors = ["red", "blue", "green", "yellow", "purple"];
-  var data = props.data;
+class Payer extends React.Component {
+  constructor(props) {
+    super(props);
 
-  var averages = {
-    medcareAvg: 0,
-    medaidAvg: 0,
-    commAvg: 0,
-    thirdAvg: 0,
-    otherAvg: 0
-  };
+    this.state = {
+      isTooltipActive: false
+    };
 
-  data.forEach(el => {
-    averages.medcareAvg += el.medicare;
-    averages.medaidAvg += el.medicaid;
-    averages.commAvg += el.commercial;
-    averages.thirdAvg += el.thirdparty;
-    averages.otherAvg += el.other;
-  });
-
-  var avgData = [];
-  for (var key in averages) {
-    averages[key] = Math.floor((averages[key] /= 12 + 0.5));
-    var obj = {};
-    obj[key] = averages[key];
-    avgData.push({ name: key, value: averages[key] });
+    this.mouseEnter = this.mouseEnter.bind(this);
+    this.mouseLeave = this.mouseLeave.bind(this);
   }
 
-  return (
-    <div className="dash-section-wrap-div">
-      <div className="payer-quarter-panel-div">
-        <h3>{data.quarter}</h3>
-        <BarChart
-          width={600}
-          height={300}
-          data={avgData}
-          style={{ display: "inline-table" }}
-          label={{ fill: "black" }}
+  mouseEnter() {
+    this.setState({ isTooltipActive: true });
+  }
+
+  mouseLeave() {
+    this.setState({ isTooltipActive: false });
+  }
+
+  render() {
+    var data = this.props.data;
+
+    var dataWithTotal = data.map(val => {
+      var total = 0;
+
+      for (var key in val) {
+        if (typeof val[key] !== "string") {
+          total += val[key];
+        }
+      }
+      val.total = total;
+      return val;
+    });
+
+    return (
+      <div className="payer-panel-div">
+        <h1>Payer</h1>
+        <div className="payer-barchart-y-label">
+          Amount<br />(People)
+        </div>
+        <ResponsiveContainer
+          width={900}
+          height={275}
+          className="payer-barchart-wrapper"
         >
-          <Bar
-            dataKey="value"
-            cx={0}
-            cy={110}
-            fill="pink"
+          <BarChart
+            width={900}
+            height={275}
+            margin={{ bottom: 25, top: 25, left: 100 }}
+            data={dataWithTotal}
+            style={{ display: "inline-table", verticalAlign: "middle" }}
             label={{ fill: "black" }}
+            barSize={100}
           >
-            {barColors.map(color => <Cell fill={color} />)}
-          </Bar>
-          <XAxis dataKey={"name"} />
-          <YAxis dataKey={"value"} />
-        </BarChart>
-        <PieChart width={400} height={300} style={{ display: "inline-table" }}>
-          <Pie
-            data={avgData}
-            dataKey="value"
-            cx={200}
-            cy={150}
-            outerRadius={120}
-            fill="#8884d8"
-            label={{ fill: "black" }}
-          >
-            {barColors.map(color => <Cell fill={color} />)}
-          </Pie>
-          <Tooltip itemStyle={{ color: "navy" }} />
-        </PieChart>
+            <Tooltip content={<PieTooltip />} position={{ x: 900, y: -26 }} />
+            <Bar dataKey="total" cx={0} cy={110} fill="#022100" barSize={40} />
+            <XAxis dataKey="quarter" tick={{ fontSize: "18px" }}>
+              <Label value="Total Enrollees: Male + Female" position="bottom" />
+            </XAxis>
+            <YAxis />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Payer;

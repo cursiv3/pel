@@ -13,7 +13,6 @@ class Dashboard extends React.Component {
       <div>
         <Sex data={data.sex} />
 
-        <h1>Payer</h1>
         <Payer data={data.payer} />
       </div>
     );

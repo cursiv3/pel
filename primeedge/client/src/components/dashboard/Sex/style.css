@@ -41,7 +41,6 @@
 }
 
 .sex-legend-female-label {
-  display: inline-table;
   vertical-align: middle;
   float: left;
   margin: 0 0 0 5px;
@@ -49,23 +48,40 @@
 
 .sex-legend-male-val {
   clear: left;
-  position: relative;
-  top: 20px;
 }
 
 .sex-legend-female-val {
   margin: 0;
   padding: 0;
   position: relative;
-  top: -10px;
 }
 
-.sex-pie-lmh-wrapper {
-  width: 25%;
-  display: inline-table;
+.sex-legend-female-int {
+  text-align: right;
+}
+
+.sex-legend-male-int {
+  text-align: right;
 }
 
 .sex-barchart-wrapper {
-  width: 25%;
-  display: inline-table;
+  left: 45%;
+  transform: translateX(-50%);
+  position: relative;
+}
+
+.pietooltip-percentage-male {
+  position: absolute;
+  top: 55%;
+  left: 55%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.pietooltip-percentage-female {
+  position: absolute;
+  top: 76%;
+  left: 55%;
+  transform: translateX(-50%);
+  z-index: 10;
 }

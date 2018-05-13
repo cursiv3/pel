@@ -14,50 +14,37 @@ import {
   LabelList
 } from "recharts";
 import PieTooltip from "./PieTooltip";
-import barchartLabel from "./barchartLabel";
 
 class TotalsBarchart extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: null,
-      isActive: false
-    }
-    this.onMouseHover = this.onMouseHover.bind(this);
-  }
-
-  onMouseHover(data) {
-    this.setState({
-      values: data
-    });
-  }
-
   render() {
     return (
       <div className="sex-barchart-wrapper">
         <BarChart
           width={800}
           height={275}
-          margin={{ bottom: 25, top: 25, left: 25 }}
+          margin={{ bottom: 25, top: 25, left: 40 }}
           data={this.props.data}
           style={{ display: "inline-table", verticalAlign: "middle" }}
           label={{ fill: "black" }}
           barSize={100}
         >
-          <Tooltip content={<barchartLabel state={this.state} onMouseHover={this.onMouseHover} />} />
-          <Bar dataKey="total" cx={0} cy={110} fill="darkgreen" barSize={40} />
+          <Tooltip content={<PieTooltip />} position={{ x: 820, y: -85 }} />
+          <Bar dataKey="total" cx={0} cy={110} fill="#022100" barSize={40} />
           <XAxis dataKey="quarter" tick={{ fontSize: "18px" }}>
             <Label value="Total Enrollees: Male + Female" position="bottom" />
           </XAxis>
           <YAxis>
-            <Label value="Enrollee Amount" angle={-90} position="left" />
+            <Label
+              value="Amount (enrollees)"
+              position="insideBottomLeft"
+              offset={-5}
+              angle={-90}
+            />
           </YAxis>
         </BarChart>
-        <PieTooltip state={this.state} onMouseHover={this.onMouseHover} />
       </div>
     );
   }
-};
+}
 
 export default TotalsBarchart;
