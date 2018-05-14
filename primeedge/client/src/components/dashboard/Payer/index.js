@@ -14,6 +14,7 @@ import {
 } from "recharts";
 import PieTooltip from "./PieTooltip";
 import "./style.css";
+import BarchartTotals from "./BarchartTotals";
 
 class Payer extends React.Component {
   constructor(props) {
@@ -66,28 +67,7 @@ class Payer extends React.Component {
       <div className="payer-panel-div">
         <h1>Payer</h1>
         <div className="payer-barchart-wrapper">
-          <BarChart
-            width={900}
-            height={275}
-            margin={{ bottom: 25, top: 25, left: 100 }}
-            data={dataWithTotal}
-            style={{ display: "inline-table", verticalAlign: "middle" }}
-            label={{ fill: "black" }}
-            barSize={100}
-          >
-            <Bar
-              dataKey="total"
-              cx={0}
-              cy={110}
-              fill="#022100"
-              barSize={40}
-              onMouseDown={evt => this.clickBar(evt)}
-            />
-            <XAxis dataKey="quarter" tick={{ fontSize: "18px" }}>
-              <Label value="Total Enrollees: Male + Female" position="bottom" />
-            </XAxis>
-            <YAxis />
-          </BarChart>
+          <BarchartTotals data={dataWithTotal} clickBar={this.clickBar} />
           <PieChart
             width={450}
             height={250}
