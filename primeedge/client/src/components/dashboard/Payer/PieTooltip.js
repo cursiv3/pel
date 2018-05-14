@@ -47,9 +47,9 @@ const PieTooltip = props => {
   var colors = ["red", "orange", "purple", "navy", "darkgreen"];
 
   if (!props.active) {
-    return null;
+    props.mouseLeave();
   }
-
+  /*
   const data = props.payload[0].payload;
   var pieData = [];
   var total = 0;
@@ -97,7 +97,8 @@ const PieTooltip = props => {
         />
       </PieChart>
     </div>
-  );
+  );*/
+  return null;
 };
 
 export default PieTooltip;

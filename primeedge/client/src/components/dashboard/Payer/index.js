@@ -20,19 +20,30 @@ class Payer extends React.Component {
     super(props);
 
     this.state = {
-      isTooltipActive: false
+      pieData: null
     };
 
-    this.mouseEnter = this.mouseEnter.bind(this);
-    this.mouseLeave = this.mouseLeave.bind(this);
+    this.clickBar = this.clickBar.bind(this);
   }
 
-  mouseEnter() {
-    this.setState({ isTooltipActive: true });
-  }
+  clickBar(evt) {
+    var barData = this.props.data.filter(
+      entry => entry.quarter === evt.quarter
+    );
+    barData = barData[0];
 
-  mouseLeave() {
-    this.setState({ isTooltipActive: false });
+    var pieData = [];
+    for (var key in barData) {
+      if (key !== "total" && key !== "quarter") {
+        pieData.push({
+          name: key,
+          value: barData[key],
+          percent: (barData[key] / barData.total * 100).toFixed(2) + "%"
+        });
+      }
+    }
+
+    this.setState({ pieData: pieData });
   }
 
   render() {
@@ -40,27 +51,21 @@ class Payer extends React.Component {
 
     var dataWithTotal = data.map(val => {
       var total = 0;
+      val.total = 0;
 
       for (var key in val) {
-        if (typeof val[key] !== "string") {
+        if (key !== "quarter") {
           total += val[key];
         }
       }
-      val.total = total;
+      val.total += total;
       return val;
     });
 
     return (
       <div className="payer-panel-div">
         <h1>Payer</h1>
-        <div className="payer-barchart-y-label">
-          Amount<br />(People)
-        </div>
-        <ResponsiveContainer
-          width={900}
-          height={275}
-          className="payer-barchart-wrapper"
-        >
+        <div className="payer-barchart-wrapper">
           <BarChart
             width={900}
             height={275}
@@ -70,14 +75,37 @@ class Payer extends React.Component {
             label={{ fill: "black" }}
             barSize={100}
           >
-            <Tooltip content={<PieTooltip />} position={{ x: 900, y: -26 }} />
-            <Bar dataKey="total" cx={0} cy={110} fill="#022100" barSize={40} />
+            <Bar
+              dataKey="total"
+              cx={0}
+              cy={110}
+              fill="#022100"
+              barSize={40}
+              onMouseDown={evt => this.clickBar(evt)}
+            />
             <XAxis dataKey="quarter" tick={{ fontSize: "18px" }}>
               <Label value="Total Enrollees: Male + Female" position="bottom" />
             </XAxis>
             <YAxis />
           </BarChart>
-        </ResponsiveContainer>
+          <PieChart
+            width={450}
+            height={250}
+            margin={{ right: 30, top: 55, bottom: 20, left: 10 }}
+            style={{ display: "inline-table" }}
+          >
+            <Pie
+              data={this.state.pieData}
+              dataKey="value"
+              cx={140}
+              cy={60}
+              outerRadius={80}
+              animationDuration={800}
+              label
+            />
+            <Legend />
+          </PieChart>
+        </div>
       </div>
     );
   }
