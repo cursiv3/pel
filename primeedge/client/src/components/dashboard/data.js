@@ -1,73 +1,73 @@
 module.exports = {
   sex: [
     {
-      quarter: "Q1 15",
+      quarter: "Q1 '15",
       male: 1844,
       female: 2576,
       total: 4420
     },
     {
-      quarter: "Q2 15",
+      quarter: "Q2 '15",
       male: 1914,
       female: 2633,
       total: 4547
     },
     {
-      quarter: "Q3 15",
+      quarter: "Q3 '15",
       male: 1908,
       female: 2557,
       total: 4465
     },
     {
-      quarter: "Q4 15",
+      quarter: "Q4 '15",
       male: 1990,
       female: 2717,
       total: 4707
     },
     {
-      quarter: "Q1 16",
+      quarter: "Q1 '16",
       male: 1973,
       female: 2616,
       total: 4589
     },
     {
-      quarter: "Q2 16",
+      quarter: "Q2 '16",
       male: 1956,
       female: 2734,
       total: 4690
     },
     {
-      quarter: "Q3 16",
+      quarter: "Q3 '16",
       male: 1892,
       female: 2720,
       total: 4612
     },
     {
-      quarter: "Q4 16",
+      quarter: "Q4 '16",
       male: 1955,
       female: 2669,
       total: 4624
     },
     {
-      quarter: "Q1 17",
+      quarter: "Q1 '17",
       male: 2029,
       female: 2853,
       total: 4882
     },
     {
-      quarter: "Q2 17",
+      quarter: "Q2 '17",
       male: 2068,
       female: 2833,
       total: 4901
     },
     {
-      quarter: "Q3 17",
+      quarter: "Q3 '17",
       male: 2081,
       female: 2847,
       total: 4928
     },
     {
-      quarter: "Q4 17",
+      quarter: "Q4 '17",
       male: 2085,
       female: 2830,
       total: 4915

@@ -1,29 +1,9 @@
 .payer-panel-div {
   display: inline-table;
   width: 100%;
-  margin: 0.15%;
   font-size: 22px;
   border-radius: 5px;
   text-align: center;
-  background-color: rgb(238, 238, 238);
-}
-.payer-barchart-wrapper {
-  left: 40%;
-  transform: translateX(-50%);
-  position: relative;
-}
-
-.dash-section-wrap-div {
-  width: 100%;
-}
-
-.payer-barchart-y-label {
-  position: relative;
-  left: 18%;
-  top: 125px;
-  transform: translateX(-50%);
-}
-
-.payer-legend-h3 {
-  text-align: left;
+  margin: 0;
+  padding: 0;
 }

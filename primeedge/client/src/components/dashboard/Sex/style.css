@@ -1,87 +1,11 @@
 .sex-panel-div {
   display: inline-table;
   width: 100%;
-  margin: 0.15%;
   font-size: 22px;
   border-radius: 5px;
   text-align: center;
-  background-color: rgb(238, 238, 238);
-}
-
-.custom-tooltip-wrapper {
-  background-color: white;
-  padding: 5px 10px 5px 10px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.6);
-}
-
-.sex-legend-male-color {
-  display: inline-table;
-  width: 35px;
-  height: 25px;
-  background-color: skyblue;
-  vertical-align: middle;
-  float: left;
-}
-
-.sex-legend-female-color {
-  display: inline-table;
-  width: 35px;
-  height: 25px;
-  background-color: pink;
-  vertical-align: middle;
-  float: left;
-}
-
-.sex-legend-male-label {
-  display: inline-table;
-  vertical-align: middle;
-  float: left;
-  margin: 0 0 0 5px;
-}
-
-.sex-legend-female-label {
-  vertical-align: middle;
-  float: left;
-  margin: 0 0 0 5px;
-}
-
-.sex-legend-male-val {
-  clear: left;
-}
-
-.sex-legend-female-val {
+  box-sizing: border-box;
+  border: 1px solid silver;
   margin: 0;
   padding: 0;
-  position: relative;
-}
-
-.sex-legend-female-int {
-  text-align: right;
-}
-
-.sex-legend-male-int {
-  text-align: right;
-}
-
-.sex-barchart-wrapper {
-  left: 45%;
-  transform: translateX(-50%);
-  position: relative;
-}
-
-.pietooltip-percentage-male {
-  position: absolute;
-  top: 55%;
-  left: 55%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-
-.pietooltip-percentage-female {
-  position: absolute;
-  top: 76%;
-  left: 55%;
-  transform: translateX(-50%);
-  z-index: 10;
 }
