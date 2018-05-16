@@ -7,7 +7,7 @@ const CustomLegend = props => {
       <table className="custom-legend-table">
         <tbody>
           {props.payload.map((entry, idx) => (
-            <tr className="legend-data-row">
+            <tr key={entry.value} className="legend-data-row">
               <td>
                 <div
                   className="legend-color-box"

@@ -33,6 +33,7 @@ const PieDetailView = props => {
         height={250}
         margin={{ right: 30, top: 55, bottom: 20, left: 10 }}
       >
+      <Tooltip />
         <Pie
           data={props.data}
           dataKey="value"
@@ -43,7 +44,7 @@ const PieDetailView = props => {
           animationDuration={600}
         >
           {typeof props.colors === "object"
-            ? props.colors.map(color => <Cell fill={color} />)
+            ? props.colors.map(color => <Cell key={color} fill={color} />)
             : null}
         </Pie>
         {props.data !== null ? (

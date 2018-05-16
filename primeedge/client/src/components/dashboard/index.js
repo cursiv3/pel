@@ -41,7 +41,32 @@ class Dashboard extends React.Component {
     this.setState(Object.assign({}, this.state, newDataObj));
   }
 
+  componentWillMount() {
+      var initData = [];
+      for (var field in data) {
+          var pieData = [];
+          for (var key in data[field][0]) {
+            if (key !== "total" && key !== "quarter") {
+              pieData.push( {
+                name: key,
+                value: data[field][0][key],
+                quarter: data[field][0].quarter,
+                percent: (data[field][0][key] / data[field][0].total * 100).toFixed(2) + "%"
+              })
+            }
+          }
+        initData.push(pieData);
+    }
+    this.setState({
+      sex: initData[0],
+      payer: initData[1],
+      admission: initData[2],
+      race: initData[3]
+    });
+  }
+
   render() {
+
     return (
       <div className="dashboard-wrapper">
         <Sex
