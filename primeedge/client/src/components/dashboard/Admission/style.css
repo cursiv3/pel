@@ -1,0 +1,12 @@
+.admission-panel-div {
+    display: inline-table;
+    width: 100%;
+    font-size: 22px;
+    border-radius: 5px;
+    text-align: center;
+    box-sizing: border-box;
+  border: 1px solid silver;
+    margin: 0;
+    padding: 0;
+  }
+  

@@ -1,6 +1,8 @@
 import React from "react";
 import Sex from "./Sex";
 import Payer from "./Payer";
+import AdmissionType from "./Admission"
+import Race from "./Race"
 import "./style.css";
 
 const data = require("./data.js");
@@ -11,7 +13,9 @@ class Dashboard extends React.Component {
 
     this.state = {
       sex: null,
-      payer: null
+      payer: null,
+      admission: null,
+      race: null
     };
 
     this.clickBar = this.clickBar.bind(this);
@@ -53,6 +57,16 @@ class Dashboard extends React.Component {
           clickBar={this.clickBar}
           section={"payer"}
         />
+        <AdmissionType barData={data.admission}
+          pieData={this.state.admission}
+          clickBar={this.clickBar}
+          section={"admission"}
+          />
+          <Race barData={data.race}
+          pieData={this.state.race}
+          clickBar={this.clickBar}
+          section={"race"}
+          />
       </div>
     );
   }

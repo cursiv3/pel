@@ -1,0 +1,10 @@
+.race-panel-div {
+    display: inline-table;
+    width: 100%;
+    font-size: 22px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  
